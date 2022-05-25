@@ -8,7 +8,7 @@
     if (onClick) {
       onClick();
     }
-  }}>Counter!</button
+  }}>Counter</button
 >
 
 <style>

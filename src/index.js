@@ -1,7 +1,7 @@
-import Counter from "./Counter.svelte";
+import Component from "./Component.svelte";
 
 const mount = (el, props) => {
-  new Counter({
+  new Component({
     target: el,
     props,
   });

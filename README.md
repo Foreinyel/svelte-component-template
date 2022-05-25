@@ -1,1 +1,1 @@
-# svelte-component-template
+# {{ packageName }}
