@@ -8,3 +8,5 @@ const mount = (el, props) => {
 };
 
 export default mount;
+
+export { Component };

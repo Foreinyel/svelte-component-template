@@ -1,13 +1,7 @@
 "use strict";
 
-// const http = require("http");
 const webpack = require("webpack");
-// const fs = require("fs");
-// const { createGzip } = require("zlib");
 const path = require("path");
-// const { promisify } = require("node:util");
-// const crypto = require("crypto");
-// const chokidar = require("chokidar");
 
 const pkg = require("./package.json");
 
@@ -71,7 +65,67 @@ const build = function (mode) {
     });
   });
 };
+const pack = function () {
+  return new Promise(function (resolve, reject) {
+    const compiler = webpack({
+      entry: "./src/index.js",
+      resolve: {
+        alias: {
+          svelte: path.dirname(require.resolve("svelte/package.json")),
+        },
+        extensions: [".mjs", ".js", ".svelte"],
+        mainFields: ["svelte", "browser", "module", "main"],
+      },
+      output: {
+        path: path.join(__dirname, "/lib"),
+        filename: "index.js",
+        libraryTarget: "umd",
+      },
+      module: {
+        rules: [
+          {
+            test: /\.svelte$/,
+            use: {
+              loader: "svelte-loader",
+              options: {
+                compilerOptions: {
+                  dev: false,
+                },
+              },
+            },
+          },
+          {
+            test: /\.css$/,
+            // use: [MiniCssExtractPlugin.loader, "css-loader"],
+            use: ["css-loader"],
+          },
+          {
+            // required to prevent errors from Svelte on Webpack 5+
+            test: /node_modules\/svelte\/.*\.mjs$/,
+            resolve: {
+              fullySpecified: false,
+            },
+          },
+        ],
+      },
+      mode: "production",
+      plugins: [],
+      devtool: false,
+    });
+
+    compiler.run((err, stats) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+};
 
 (async () => {
-  await Promise.all(["production", "development"].map((mode) => build(mode)));
+  await Promise.all([
+    ...["production", "development"].map((mode) => build(mode)),
+    pack(),
+  ]);
 })();

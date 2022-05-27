@@ -11,5 +11,9 @@
   "scripts": {
     "build": "node build.js"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js"
 }
