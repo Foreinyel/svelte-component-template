@@ -126,6 +126,6 @@ const pack = function () {
 (async () => {
   await Promise.all([
     ...["production", "development"].map((mode) => build(mode)),
-    pack(),
+    // pack(),
   ]);
 })();
