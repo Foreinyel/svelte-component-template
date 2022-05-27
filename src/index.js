@@ -7,6 +7,6 @@ const mount = (el, props) => {
   });
 };
 
-export default mount;
+export default Component;
 
-export { Component };
+export { mount };
