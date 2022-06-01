@@ -10,3 +10,4 @@ const mount = (el, props) => {
 export default Component;
 
 export { mount };
+

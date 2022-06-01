@@ -4,6 +4,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 const pkg = require("./package.json");
+const { parseResourceName } = require('@hemyn/utils-node')
 
 const build = function (mode) {
   return new Promise(function (resolve, reject) {
@@ -19,7 +20,7 @@ const build = function (mode) {
       },
       output: {
         path: path.join(__dirname, "/public"),
-        filename: prod ? `${pkg.name}.js` : `${pkg.name}.dev.js`,
+        filename: prod ? `${parseResourceName(pkg.name)}.js` : `${parseResourceName(pkg.name)}.dev.js`,
         libraryTarget: "system",
       },
       module: {
